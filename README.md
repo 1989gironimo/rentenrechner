@@ -1,6 +1,9 @@
 # Rentenrechner
 
 [](LICENSE)[](https://www.python.org/)[](https://github.com/1989gironimo/rentenrechner/actions/workflows/tests.yml)
+
+![Web-View](assets/rentenrechner.png)
+
 Live-Beispiel: https://rentenrechner-zhej5b6ppknvwxxhporebd.streamlit.app/
 
 Modularer Python-Baukasten zur **überschlägigen Simulation der eigenen Altersvorsorge, des späteren Renteneinkommens und einer möglichen Rentenlücke**.
