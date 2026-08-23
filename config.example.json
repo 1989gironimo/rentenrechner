@@ -1,0 +1,114 @@
+{
+    "profil": {
+        "geburtsdatum": "1995-01-01",
+        "renteneintrittsdatum": "2062-01-01",
+        "wunschrente_heutige_kaufkraft": 3000.0,
+        "inflation_prozent": 2.0,
+        "aktuelles_brutto_monat": 4500.0,
+        "gehaltssteigerung_prozent": 1.5,
+        "anzahl_kinder": 2,
+        "kindergeburtsjahre": [2018, 2021]
+    },
+    "steuern": {
+        "kv_pv_satz_voll": 18.5,
+        "kv_pv_satz_ermässigt": 11.3,
+        "persoenlicher_steuersatz": 20.0,
+        "abgeltungsteuersatz_prozent": 25.0,
+        "solidaritaetszuschlag_prozent": 5.5,
+        "kirchensteuer_prozent": 0.0,
+        "teilfreistellung_prozent": 70.0
+    },
+    "produkte": [
+        {
+            "modul_name": "gesetzliche_rente",
+            "klassen_name": "GesetzlicheRente",
+            "parameter": {
+                "aktuelle_rentenansprueche": 1000.0,
+                "rentenanpassung_prozent": 1.5,
+                "abgaben_typ": "gesetzlich",
+                "aktueller_rentenwert": 42.52,
+                "durchschnittsentgelt": 51944.0,
+                "rv_bbg_jahr": 101400.0
+            }
+        },
+        {
+            "modul_name": "bav",
+            "klassen_name": "BetriebsrentebAV",
+            "parameter": {
+                "start_datum": "2026-01-01",
+                "monatlicher_beitrag_mitarbeiter": 100.0,
+                "arbeitgeber_zuschuss_prozent": 15.0,
+                "staffel_beitraege": [
+                    {"ab_jahr": 0, "eigenbeitrag": 100.0}
+                ],
+                "erwartete_rendite_prozent": 4.0,
+                "kostenquote_prozent": 1.03,
+                "startkapital": 0.0,
+                "startkapital_datum": "2026-01-01",
+                "dynamik_prozent": 0.0,
+                "abgaben_typ": "bav"
+            }
+        },
+        {
+            "modul_name": "altersvorsorgedepot",
+            "klassen_name": "AltersvorsorgeDepot",
+            "parameter": {
+                "start_datum": "2027-01-01",
+                "monatlicher_eigenbeitrag": 150.0,
+                "erwartete_rendite_prozent": 6.0,
+                "kostenquote_prozent": 0.2,
+                "abgaben_typ": "altersvorsorgedepot"
+            }
+        },
+        {
+            "modul_name": "unterstuetzungskasse",
+            "klassen_name": "Unterstuetzungskasse",
+            "parameter": {
+                "start_datum": "2027-01-01",
+                "beschaeftigungs_start_datum": "2026-01-01",
+                "staffel_beitraege": [
+                    {"ab_jahr": 0, "eigenbeitrag": 50.0, "ag_beitrag": 50.0}
+                ],
+                "erwartete_rendite_prozent": 4.0,
+                "kosten": {
+                    "renditeminderung_prozent": 2.0, 
+                    "beitrag_prozent": 0.0,
+                    "fix_monatlich": 0.0,
+                    "psvag_promille": 0.0
+                },
+                "startkapital": 0.0,
+                "abgaben_typ": "bav"
+            }
+        },
+        {
+            "modul_name": "etf_sparplan",
+            "klassen_name": "ETFSparplan",
+            "parameter": {
+                "start_datum": "2027-01-01",
+                "monatlicher_sparplan": 200.0,
+                "erwartete_rendite_prozent": 6.0,
+                "kostenquote_prozent": 0.2,
+                "startkapital": 0.0,
+                "abgaben_typ": "etf"
+            }
+        },
+        {
+            "modul_name": "aktienrente",
+            "klassen_name": "StaatsfondsAktienrente",
+            "aktiviert": true,
+            "parameter": {
+                "start_datum": "2028-01-01",
+                "stufenplan": [
+                    {"jahr": 2028, "an_prozent": 0.25, "ag_prozent": 0.25},
+                    {"jahr": 2029, "an_prozent": 0.50, "ag_prozent": 0.50},
+                    {"jahr": 2030, "an_prozent": 0.75, "ag_prozent": 0.75},
+                    {"jahr": 2031, "an_prozent": 1.00, "ag_prozent": 1.00}
+                ],
+                "erwartete_rendite_prozent": 5.0,
+                "kostenquote_prozent": 0.1,
+                "startkapital": 0.0,
+                "abgaben_typ": "gesetzlich"
+            }
+        }
+    ]
+}
