@@ -99,7 +99,7 @@ def render_config_import():
                 st.error(f"❌ Datei zu groß. Maximal {_MAX_FILE_SIZE_MB} MB erlaubt.")
                 return
 
-            if st.button("📥 Import anwenden", use_container_width=True, key="btn_import"):
+            if st.button("📥 Import anwenden", width="stretch", key="btn_import"):
                 try:
                     raw = uploaded.read()
                     # Nur UTF-8 erlauben
@@ -139,7 +139,7 @@ def render_config_import():
             st.info("Aktuell sind importierte Werte aus einer `config.json` aktiv.")
             if st.button(
                 "❌ Import zurücksetzen (Standardwerte laden)",
-                use_container_width=True,
+                width="stretch",
                 key="btn_reset"
             ):
                 _clear_import()

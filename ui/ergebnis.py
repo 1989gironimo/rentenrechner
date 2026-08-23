@@ -79,7 +79,7 @@ def _generate_csv(aggregator):
 def render_ergebnis(profil_values, produkte_config):
     st.divider()
 
-    if not st.button("🚀 Berechnung starten", type="primary", use_container_width=True):
+    if not st.button("🚀 Berechnung starten", type="primary", width="stretch"):
         return
 
     with st.spinner("Berechnung läuft... Das kann einen Moment dauern."):
@@ -142,7 +142,7 @@ def render_ergebnis(profil_values, produkte_config):
             verlauf = KapitalVerlauf(mein_profil, steuer_rechner, rechner.produkte)
             fig = verlauf.plot_streamlit()
             if fig:
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
             else:
                 st.info("Keine kapitalbildenden Produkte zur Visualisierung vorhanden.")
 

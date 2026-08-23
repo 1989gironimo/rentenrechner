@@ -46,10 +46,15 @@ def render_sidebar():
             step=0.1,
             help="Angenommene jährliche Gehaltssteigerung."
         )
+
+        # Default-Wert vorab in den Session State schreiben, falls nicht vorhanden
+        default_anzahl = int(_imported(["profil", "anzahl_kinder"], 0))
+        if "profil_anzahl_kinder" not in st.session_state:
+            st.session_state["profil_anzahl_kinder"] = default_anzahl
+
         anzahl_kinder = st.number_input(
             "Anzahl Kinder",
             min_value=0,
-            value=int(_imported(["profil", "anzahl_kinder"], 0)),
             step=1,
             key="profil_anzahl_kinder",
             help="Anzahl der Kinder. Wird für die Förderung des Altersvorsorge-Depots genutzt."
@@ -65,13 +70,16 @@ def render_sidebar():
 
             for i in range(int(anzahl_kinder)):
                 default_jahr = imported_kinder[i] if i < len(imported_kinder) else 2020
+                key = f"kind_geburtsjahr_{i}"
+                if key not in st.session_state:
+                    st.session_state[key] = int(default_jahr) if isinstance(default_jahr, (int, float)) else 2020
+
                 jahr = st.number_input(
                     f"Geburtsjahr Kind {i + 1}",
                     min_value=1900,
                     max_value=datetime.now().year,
-                    value=int(default_jahr) if isinstance(default_jahr, (int, float)) else 2020,
                     step=1,
-                    key=f"kind_geburtsjahr_{i}",
+                    key=key,
                     help=f"Geburtsjahr des {i + 1}. Kindes."
                 )
                 kindergeburtsjahre.append(int(jahr))

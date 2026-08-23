@@ -48,10 +48,13 @@ def _render_field(modul: str, field: dict, col):
 
         dt_val = _safe_date(imported_val, default)
 
+        # Wert vorab in Session State schreiben, falls noch nicht vorhanden
+        if widget_key not in st.session_state:
+            st.session_state[widget_key] = datetime.strptime(dt_val, "%Y-%m-%d").date()
+
         with col:
             return st.date_input(
                 label,
-                value=datetime.strptime(dt_val, "%Y-%m-%d").date(),
                 key=widget_key,
                 help=help_text,
             )
@@ -64,11 +67,13 @@ def _render_field(modul: str, field: dict, col):
             expected_type="int",
         )
 
+        if widget_key not in st.session_state:
+            st.session_state[widget_key] = imported_val
+
         with col:
             return st.number_input(
                 label,
                 min_value=field.get("min", 0),
-                value=imported_val,
                 step=field.get("step", 1),
                 key=widget_key,
                 help=help_text,
@@ -82,11 +87,13 @@ def _render_field(modul: str, field: dict, col):
             expected_type="number",
         )
 
+        if widget_key not in st.session_state:
+            st.session_state[widget_key] = imported_val
+
         with col:
             return st.number_input(
                 label,
                 min_value=field.get("min", 0.0),
-                value=imported_val,
                 step=field.get("step", 0.1),
                 key=widget_key,
                 help=help_text,
@@ -114,9 +121,12 @@ def render_produkte(brutto: float):
             prod["display_name"],
             expanded=aktiv,
         ):
+            # Default-Wert vorab in Session State schreiben, falls nicht vorhanden
+            if toggle_key not in st.session_state:
+                st.session_state[toggle_key] = aktiv
+
             toggle = st.toggle(
                 "Aktivieren",
-                value=aktiv,
                 key=toggle_key,
             )
 
@@ -233,7 +243,7 @@ def render_produkte(brutto: float):
                     num_rows="dynamic",
                     column_config=col_cfg,
                     key=f"{modul}_staffel_editor",
-                    use_container_width=True,
+                    width="stretch",
                 )
 
                 staffel = (
@@ -317,7 +327,7 @@ def render_produkte(brutto: float):
                     num_rows="dynamic",
                     column_config=col_cfg,
                     key=f"{modul}_stufen_editor",
-                    use_container_width=True,
+                    width="stretch",
                 )
 
                 stufenplan = (
