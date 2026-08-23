@@ -2,14 +2,78 @@
 
 import streamlit as st
 import importlib
+import io
+import csv
 from io import StringIO
 from contextlib import redirect_stdout
 
 from core.profil import NutzerProfil
 from core.steuern import SteuerRechner
 from engine.aggregator import RentenAggregator
-from engine.csv_export import CsvExport
 from engine.visualisierung import KapitalVerlauf
+
+
+def _generate_csv(aggregator):
+    """Erzeugt die monatliche Projektion als CSV-String im Speicher."""
+    df = aggregator.berechne_monatliche_projektion()
+    if df.empty:
+        return None
+
+    # Produkte ermitteln (ohne "Gesamt")
+    produkte = [p for p in df["produkt"].unique() if p != "Gesamt"]
+
+    # Header aufbauen
+    header = [
+        "Jahr",
+        "Monat",
+        "Gesamtnettoaufwand",
+        "Gesamtförderung Arbeitgeber",
+        "Gesamtförderung Staat",
+    ]
+    for p_name in produkte:
+        header.extend([
+            f"{p_name} - Netto Eigenleistung",
+            f"{p_name} - AG-Beitrag",
+            f"{p_name} - Kapitalstand",
+            f"{p_name} - Staatliche Förderung",
+        ])
+
+    buffer = io.StringIO()
+    writer = csv.writer(buffer, delimiter=";", lineterminator="\n")
+    writer.writerow(header)
+
+    # Pro Jahr/Monat aggregieren
+    for (jahr, monat), gruppe in df.groupby(["jahr", "monat"]):
+        # Gesamtsummen
+        gesamt_netto = gruppe["netto_eigenleistung"].sum()
+        gesamt_ag = gruppe["ag_beitrag"].sum()
+        gesamt_staat = gruppe["staatliche_foerderung"].sum()
+
+        zeile = [
+            jahr,
+            monat,
+            f"{gesamt_netto:.2f}".replace(".", ","),
+            f"{gesamt_ag:.2f}".replace(".", ","),
+            f"{gesamt_staat:.2f}".replace(".", ","),
+        ]
+
+        # Pro Produkt die Werte
+        for p_name in produkte:
+            prod_df = gruppe[gruppe["produkt"] == p_name]
+            if not prod_df.empty:
+                row = prod_df.iloc[0]
+                zeile.extend([
+                    f"{row['netto_eigenleistung']:.2f}".replace(".", ","),
+                    f"{row['ag_beitrag']:.2f}".replace(".", ","),
+                    f"{row['kapital']:.2f}".replace(".", ","),
+                    f"{row['staatliche_foerderung']:.2f}".replace(".", ","),
+                ])
+            else:
+                zeile.extend(["0,00", "0,00", "0,00", "0,00"])
+
+        writer.writerow(zeile)
+
+    return buffer.getvalue()
 
 
 def render_ergebnis(profil_values, produkte_config):
@@ -63,8 +127,7 @@ def render_ergebnis(profil_values, produkte_config):
                 rechner.generiere_report()
             report_text = report_buffer.getvalue()
 
-            export = CsvExport(aggregator=rechner)
-            export.exportiere_monatliche_projektion("renten_verlauf.csv")
+            csv_data = _generate_csv(rechner)
 
             st.success("Berechnung abgeschlossen!")
 
@@ -87,17 +150,15 @@ def render_ergebnis(profil_values, produkte_config):
             st.text(report_text)
 
             st.subheader("📥 Export")
-            try:
-                with open("renten_verlauf.csv", "r", encoding="utf-8") as f:
-                    csv_bytes = f.read()
+            if csv_data:
                 st.download_button(
                     label="CSV herunterladen (renten_verlauf.csv)",
-                    data=csv_bytes,
+                    data=csv_data,
                     file_name="renten_verlauf.csv",
                     mime="text/csv",
                 )
-            except FileNotFoundError:
-                st.info("CSV-Datei wurde nicht gefunden.")
+            else:
+                st.info("Keine gültigen Produkte für den CSV-Export gefunden.")
 
         except Exception as e:
             st.error(f"Fehler bei der Berechnung: {e}")
