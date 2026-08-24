@@ -202,7 +202,7 @@ Eigenständige Module für die verschiedenen Vorsorgebausteine.
 
 Automatisierte Tests für die Berechnungslogik und Ausgaben.
 
-ui/
+### `ui/`
 Streamlit-spezifische UI-Komponenten für die Web-App.
 
 ### `utils/`
