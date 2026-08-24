@@ -947,26 +947,6 @@ Beim Hinzufügen eines Produkts sollte außerdem dokumentiert werden:
 
 ---
 
-## Mitmachen
-
-Issues und Pull Requests sind willkommen.
-
-Besonders interessant sind Beiträge zu:
-
-* zusätzlichen Produktmodellen,
-* Tests,
-* Steuer- und Sozialversicherungslogik,
-* Validierung der Modellannahmen,
-* Szenarioanalysen,
-* Visualisierung,
-* Dokumentation.
-
-Bei Änderungen an der Berechnungslogik sollten nach Möglichkeit automatisierte Tests ergänzt oder angepasst werden.
-
-Für größere strukturelle Änderungen empfiehlt es sich, zunächst ein Issue zu eröffnen.
-
----
-
 ## Haftungsausschluss
 
 Dieses Projekt dient ausschließlich zu **Informations-, Lern- und Simulationszwecken**.
