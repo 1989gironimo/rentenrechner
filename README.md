@@ -4,6 +4,8 @@
 
 ![Web-View](assets/rentenrechner.png)
 
+Live-Beispiel: https://rentenrechner-zhej5b6ppknvwxxhporebd.streamlit.app/
+
 Modularer Python-Baukasten zur **überschlägigen Simulation der eigenen Altersvorsorge, des späteren Renteneinkommens und einer möglichen Rentenlücke**.
 
 Der Rentenrechner kombiniert persönliche Annahmen mit verschiedenen Vorsorgebausteinen. Je nach Produkt werden Beiträge, Rendite, Kosten, Steuern, Sozialabgaben und Förderungen modelliert. Die Berechnung erfolgt monatlich bis zum konfigurierten Renteneintritt.
@@ -40,7 +42,6 @@ Der Rentenrechner kombiniert persönliche Annahmen mit verschiedenen Vorsorgebau
 * [Datenquellen und Aktualisierung](#datenquellen-und-aktualisierung)
 * [Tests](#tests)
 * [Eigene Produkte entwickeln](#eigene-produkte-entwickeln)
-* [Mitmachen](#mitmachen)
 * [Lizenz](#lizenz)
 
 ---
