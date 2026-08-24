@@ -4,8 +4,6 @@
 
 ![Web-View](assets/rentenrechner.png)
 
-Live-Beispiel: https://rentenrechner-zhej5b6ppknvwxxhporebd.streamlit.app/
-
 Modularer Python-Baukasten zur **überschlägigen Simulation der eigenen Altersvorsorge, des späteren Renteneinkommens und einer möglichen Rentenlücke**.
 
 Der Rentenrechner kombiniert persönliche Annahmen mit verschiedenen Vorsorgebausteinen. Je nach Produkt werden Beiträge, Rendite, Kosten, Steuern, Sozialabgaben und Förderungen modelliert. Die Berechnung erfolgt monatlich bis zum konfigurierten Renteneintritt.
@@ -215,7 +213,6 @@ Die **interaktive Web-Oberfläche** ist der einfachste Einstieg. Du gibst alle P
 * **Alle Vorsorgeprodukte** konfigurieren (Gesetzliche Rente, bAV, Altersvorsorge-Depot, Unterstützungskasse, ETF-Sparplan, Aktienrente/Staatsfonds)
 * **Beitragsstaffeln und Stufenpläne** dynamisch über Tabellen editieren
 * **Zentrales Bruttogehalt** im Profil – wird automatisch von der Aktienrente verwendet
-* **Dynamische Kinder-Geburtsjahre** – je nach Anzahl Kinder im Profil werden automatisch die entsprechenden Geburtsjahre-Felder angezeigt
 * **Live-Berechnung** mit detailliertem Report, Metriken und CSV-Export
 
 ### Voraussetzungen
@@ -350,9 +347,7 @@ Beispiel:
     "wunschrente_heutige_kaufkraft": 3000.0,
     "inflation_prozent": 2.0,
     "aktuelles_brutto_monat": 4500.0,
-    "gehaltssteigerung_prozent": 1.5,
-    "anzahl_kinder": 2,
-    "kindergeburtsjahre": [2018, 2021]
+    "gehaltssteigerung_prozent": 1.5
   }
 }
 ```
@@ -365,12 +360,8 @@ Beispiel:
 | `inflation_prozent`             | % p. a. | angenommene jährliche Inflation                               |
 | `aktuelles_brutto_monat`        | €/Monat | aktuelles Bruttogehalt                                        |
 | `gehaltssteigerung_prozent`     | % p. a. | angenommene jährliche Gehaltssteigerung                       |
-| `anzahl_kinder`                 | Anzahl  | Anzahl der Kinder (relevant für Kinderzulagen)                |
-| `kindergeburtsjahre`            | Liste   | Geburtsjahre der Kinder (z. B. `[2018, 2021]`)                |
 
 Die Zielrente wird in **heutiger Kaufkraft** angegeben. Für die Projektion wird sie anhand der konfigurierten Inflationsannahme in die Zukunft fortgeschrieben.
-
-> **Hinweis zu `kindergeburtsjahre`:** Werden Geburtsjahre angegeben, fließen sie altersgenau in die Förderberechnung des Altersvorsorgedepots ein (Kinderzulage gilt bis zum 18. Lebensjahr). Fehlen die Geburtsjahre, wird pauschal `anzahl_kinder × 300 €` pro Jahr angenommen.
 
 ---
 
@@ -531,11 +522,11 @@ Beispielparameter:
 Unterstützt unter anderem:
 
 * monatliche Eigenbeiträge
-* Förderungen (Grundzulage, Kinderzulage, Berufseinsteigerbonus)
+* Anzahl der Kinder
+* Kindergeburtsjahre
+* Förderungen
 * Renditeannahmen
 * Kosten
-
-> **Hinweis:** Anzahl und Geburtsjahre der Kinder werden im **Profil** konfiguriert (`anzahl_kinder`, `kindergeburtsjahre`) und fließen automatisch in die Förderberechnung ein.
 
 Beispiel:
 
@@ -543,6 +534,8 @@ Beispiel:
 {
   "start_datum": "2027-01-01",
   "monatlicher_eigenbeitrag": 150.0,
+  "anzahl_kinder": 0,
+  "kindergeburtsjahre": [],
   "erwartete_rendite_prozent": 6.0,
   "kostenquote_prozent": 0.2,
   "abgaben_typ": "altersvorsorgedepot"
@@ -630,6 +623,8 @@ Das Modell unterstützt unter anderem:
 * Kosten
 * Startkapital
 
+> **Hinweis:** Das Bruttogehalt wird direkt aus dem `NutzerProfil` bezogen (`profil.aktuelles_brutto_monat`). Eine separate Angabe im Produkt-Parameter `aktuelles_brutto_monat` ist nicht mehr erforderlich und wird vom Modell ignoriert.
+
 Beispiel:
 
 ```json
@@ -683,9 +678,7 @@ Für einen einfachen Einstieg genügt bereits eine Konfiguration mit einem Produ
     "wunschrente_heutige_kaufkraft": 3000.0,
     "inflation_prozent": 2.0,
     "aktuelles_brutto_monat": 4500.0,
-    "gehaltssteigerung_prozent": 1.5,
-    "anzahl_kinder": 0,
-    "kindergeburtsjahre": []
+    "gehaltssteigerung_prozent": 1.5
   },
   "steuern": {
     "kv_pv_satz_voll": 18.5,
