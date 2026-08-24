@@ -192,23 +192,23 @@ Grundlegende Modelle und Berechnungslogik, unter anderem für:
 
 ### `engine/`
 
-Zentrale Simulations-, Aggregations- und Ausgabe-Logik.
+Zentrale Simulations-, Aggregations- und Ausgabe-Logik
 
 ### `produkte/`
 
-Eigenständige Module für die verschiedenen Vorsorgebausteine.
+Eigenständige Module für die verschiedenen Vorsorgebausteine
 
 ### `tests/`
 
-Automatisierte Tests für die Berechnungslogik und Ausgaben.
+Automatisierte Tests für die Berechnungslogik und Ausgaben
 
 ### `ui/`
 
-Streamlit-spezifische UI-Komponenten für die Web-App.
+Streamlit-spezifische UI-Komponenten für die Web-App
 
 ### `utils/`
 
-Hilfsfunktionen, die von mehreren Modulen genutzt werden:
+Hilfsfunktionen, die von mehreren Modulen genutzt werden
 
 ---
 
