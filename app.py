@@ -2,6 +2,7 @@
 
 import streamlit as st
 from ui.import_config import render_config_import
+from ui.export_config import render_config_export
 from ui.sidebar import render_sidebar
 from ui.produkte import render_produkte
 from ui.ergebnis import render_ergebnis
@@ -28,4 +29,8 @@ sync_toggles_with_session_state()
 
 profil_values = render_sidebar()
 produkte_config = render_produkte(profil_values["brutto"])
+
+# Export der aktuellen Eingaben (vor der Berechnung)
+render_config_export(profil_values, produkte_config)
+
 render_ergebnis(profil_values, produkte_config)
