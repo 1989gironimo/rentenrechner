@@ -133,6 +133,8 @@ Die eigentliche Projektion erfolgt **monatlich**. Beiträge, Rendite und Kosten 
 
 ## Projektstruktur
 
+## Projektstruktur
+
 ```text
 rentenrechner/
 ├── core/
@@ -156,6 +158,17 @@ rentenrechner/
 │   ├── aktienrente.py
 │   └── renten_basis.py
 │
+├── ui/
+│   ├── sidebar.py
+│   ├── produkte.py
+│   ├── ergebnis.py
+│   ├── import_config.py
+│   ├── export_config.py
+│   └── produkt_registry.py
+│
+├── utils/
+│   └── config.py
+│
 ├── tests/
 │   └── ...
 │
@@ -163,6 +176,7 @@ rentenrechner/
 ├── requirements.txt       ← Python-Abhängigkeiten
 ├── config.example.json    ← Beispielkonfiguration für CLI
 ├── main.py                ← Kommandozeilen-Einstieg
+├── CONTRIBUTING.md
 ├── LICENSE
 └── README.md
 ```
@@ -187,6 +201,13 @@ Eigenständige Module für die verschiedenen Vorsorgebausteine.
 ### `tests/`
 
 Automatisierte Tests für die Berechnungslogik und Ausgaben.
+
+ui/
+Streamlit-spezifische UI-Komponenten für die Web-App.
+
+### `utils/`
+
+Hilfsfunktionen, die von mehreren Modulen genutzt werden:
 
 ---
 
